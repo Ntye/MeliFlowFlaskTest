@@ -39,7 +39,10 @@ def get_all_ruches():
         
         rucher_id = request.args.get('rucher_id')
         if rucher_id:
-            query = query.filter(Ruche.rucher_id == int(rucher_id))
+            try:
+                query = query.filter(Ruche.rucher_id == int(rucher_id))
+            except (ValueError, TypeError):
+                return jsonify({'error': 'Invalid rucher_id parameter'}), 400
         
         # Radius search
         radius = request.args.get('radius')
@@ -91,7 +94,7 @@ def get_ruche(ruche_id):
         GeoJSON Feature
     """
     try:
-        ruche = Ruche.query.get(ruche_id)
+        ruche = db.session.get(Ruche, ruche_id)
         
         if not ruche:
             return jsonify({'error': 'Ruche not found'}), 404
@@ -157,7 +160,7 @@ def get_rucher(rucher_id):
         GeoJSON Feature
     """
     try:
-        rucher = Rucher.query.get(rucher_id)
+        rucher = db.session.get(Rucher, rucher_id)
         
         if not rucher:
             return jsonify({'error': 'Rucher not found'}), 404
