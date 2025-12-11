@@ -95,4 +95,8 @@ def seed_db():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # Debug mode is controlled by FLASK_ENV environment variable
+    # Only enable debug mode in development environment
+    import os
+    debug_mode = os.getenv('FLASK_ENV', 'production') == 'development'
+    app.run(debug=debug_mode)
