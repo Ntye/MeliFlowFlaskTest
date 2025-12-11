@@ -1,7 +1,7 @@
 """
 Rucher (Apiary) model with PostGIS geometry support.
 """
-from datetime import datetime
+from datetime import datetime, timezone
 from sqlalchemy import Column, Integer, String, Text, DateTime
 from geoalchemy2 import Geometry
 from app import db
@@ -24,7 +24,7 @@ class Rucher(db.Model):
     name = Column(String(255), nullable=False)
     description = Column(Text, nullable=True)
     geom = Column(Geometry(geometry_type='GEOMETRY', srid=4326), nullable=False)
-    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), nullable=False)
     
     # Relationship
     ruches = db.relationship('Ruche', back_populates='rucher')

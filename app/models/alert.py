@@ -1,7 +1,7 @@
 """
 Alert model for triggered alerts.
 """
-from datetime import datetime
+from datetime import datetime, timezone
 from sqlalchemy import Column, Integer, ForeignKey, DateTime, Boolean, JSON
 from app import db
 
@@ -23,7 +23,7 @@ class Alert(db.Model):
     id = Column(Integer, primary_key=True)
     rule_id = Column(Integer, ForeignKey('alert_rules.id'), nullable=False)
     ruche_id = Column(Integer, ForeignKey('ruches.id'), nullable=False)
-    triggered_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+    triggered_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), nullable=False)
     payload = Column(JSON, nullable=True)
     sent_whatsapp = Column(Boolean, default=False, nullable=False)
     

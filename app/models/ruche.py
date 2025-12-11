@@ -1,7 +1,7 @@
 """
 Ruche (Hive) model with PostGIS geometry support.
 """
-from datetime import datetime
+from datetime import datetime, timezone
 from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Boolean, JSON
 from geoalchemy2 import Geometry
 from app import db
@@ -26,7 +26,7 @@ class Ruche(db.Model):
     name = Column(String(255), nullable=False)
     rucher_id = Column(Integer, ForeignKey('ruchers.id'), nullable=True)
     queen_info = Column(JSON, nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), nullable=False)
     geom = Column(Geometry(geometry_type='POINT', srid=4326), nullable=False)
     active = Column(Boolean, default=True, nullable=False)
     

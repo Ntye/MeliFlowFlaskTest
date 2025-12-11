@@ -1,6 +1,7 @@
 """
 Main Flask application entry point.
 """
+from datetime import datetime, timezone
 from app import create_app, db
 
 # Create Flask application
@@ -43,14 +44,14 @@ def seed_db():
             name="Apiary Central Park",
             description="Main apiary in Central Park",
             geom=WKTElement('POINT(-73.9654 40.7829)', srid=4326),
-            created_at=datetime.utcnow()
+            created_at=datetime.now(timezone.utc)
         )
         
         rucher2 = Rucher(
             name="Apiary Brooklyn Bridge",
             description="Apiary near Brooklyn Bridge",
             geom=WKTElement('POINT(-73.9969 40.7061)', srid=4326),
-            created_at=datetime.utcnow()
+            created_at=datetime.now(timezone.utc)
         )
         
         db.session.add(rucher1)
@@ -64,7 +65,7 @@ def seed_db():
             queen_info={"age": 2, "breed": "Italian"},
             geom=WKTElement('POINT(-73.9654 40.7829)', srid=4326),
             active=True,
-            created_at=datetime.utcnow()
+            created_at=datetime.now(timezone.utc)
         )
         
         ruche2 = Ruche(
@@ -73,7 +74,7 @@ def seed_db():
             queen_info={"age": 1, "breed": "Carniolan"},
             geom=WKTElement('POINT(-73.9644 40.7839)', srid=4326),
             active=True,
-            created_at=datetime.utcnow()
+            created_at=datetime.now(timezone.utc)
         )
         
         ruche3 = Ruche(
@@ -82,7 +83,7 @@ def seed_db():
             queen_info={"age": 3, "breed": "Buckfast"},
             geom=WKTElement('POINT(-73.9969 40.7061)', srid=4326),
             active=True,
-            created_at=datetime.utcnow()
+            created_at=datetime.now(timezone.utc)
         )
         
         db.session.add(ruche1)

@@ -1,7 +1,7 @@
 """
 Measurement model for sensor data from hives.
 """
-from datetime import datetime
+from datetime import datetime, timezone
 from sqlalchemy import Column, Integer, Float, ForeignKey, DateTime, JSON
 from app import db
 
@@ -24,7 +24,7 @@ class Measurement(db.Model):
     
     id = Column(Integer, primary_key=True)
     ruche_id = Column(Integer, ForeignKey('ruches.id'), nullable=False)
-    recorded_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+    recorded_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), nullable=False)
     weight = Column(Float, nullable=True)
     temperature = Column(Float, nullable=True)
     humidity = Column(Float, nullable=True)

@@ -2,7 +2,7 @@
 Health check and status endpoints.
 """
 from flask import Blueprint, jsonify, current_app
-from datetime import datetime
+from datetime import datetime, timezone
 from sqlalchemy import text
 from app import db
 
@@ -28,7 +28,7 @@ def health_check():
     
     health_status = {
         'status': 'healthy' if db_status == 'healthy' else 'unhealthy',
-        'timestamp': datetime.utcnow().isoformat(),
+        'timestamp': datetime.now(timezone.utc).isoformat(),
         'api_version': current_app.config.get('API_VERSION', '1.0.0'),
         'checks': {
             'database': {
@@ -68,7 +68,7 @@ def status():
     status_info = {
         'api_title': current_app.config.get('API_TITLE', 'BeeTrack GeoJSON API'),
         'api_version': current_app.config.get('API_VERSION', '1.0.0'),
-        'timestamp': datetime.utcnow().isoformat(),
+        'timestamp': datetime.now(timezone.utc).isoformat(),
         'database': {
             'postgis_version': postgis_version,
             'postgresql_version': pg_version

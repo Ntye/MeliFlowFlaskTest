@@ -4,7 +4,7 @@ Spatial operations and utilities for geographic data.
 from typing import List, Tuple, Optional
 import numpy as np
 from shapely.geometry import Point
-from geoalchemy2 import func
+from sqlalchemy import func
 from sklearn.cluster import DBSCAN
 from app import db
 
